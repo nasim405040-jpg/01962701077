@@ -1,0 +1,8 @@
+{
+  "name": "Remix সত্যবাণী",
+  "description": "একটি আধুনিক, প্রফেশনাল এবং নির্ভরযোগ্য প্রিমিয়াম বাংলা সংবাদ পোর্টাল, যা পাঠকদের দ্রুত ও নির্ভুল তথ্য প্রদান করে।",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

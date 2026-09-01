@@ -1,0 +1,21 @@
+{
+  "name": "সত্যবাণী — জাতীয় বাংলা ডিজিটাল সংবাদপত্র",
+  "short_name": "সত্যবাণী",
+  "description": "সত্যবাণী - সত্যের সন্ধানে নির্ভীক। আধুনিক, প্রফেশনাল ও নির্ভরযোগ্য বাংলা ডিজিটাল সংবাদপত্র।",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#991b1b",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=192&auto=format&fit=crop&q=80",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=512&auto=format&fit=crop&q=80",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

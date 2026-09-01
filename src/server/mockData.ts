@@ -1,0 +1,703 @@
+import {
+  Article,
+  Category,
+  BreakingNews,
+  Advertisement,
+  Author,
+  User,
+  Comment,
+  HomepageSectionConfig,
+  SiteSettings,
+  MediaItem,
+} from '../types.ts';
+
+export const INITIAL_CATEGORIES: Category[] = [
+  { id: 'cat-1', name: 'জাতীয়', slug: 'national', order: 1, showInNav: true, showOnHome: true, color: '#dc2626', subcategories: ['রাজধানী', 'আইন-আদালত', 'প্রশাসন', 'জাতীয় সংসদ'], postCount: 14 },
+  { id: 'cat-2', name: 'রাজনীতি', slug: 'politics', order: 2, showInNav: true, showOnHome: true, color: '#ea580c', subcategories: ['দলীয় কর্মসূচি', 'নির্বাচন', 'কূটনীতি'], postCount: 12 },
+  { id: 'cat-3', name: 'আন্তর্জাতিক', slug: 'international', order: 3, showInNav: true, showOnHome: true, color: '#2563eb', subcategories: ['দক্ষিণ এশিয়া', 'মধ্যপ্রাচ্য', 'ইউরোপ', 'যুক্তরাষ্ট্র'], postCount: 10 },
+  { id: 'cat-4', name: 'অর্থনীতি', slug: 'economy', order: 4, showInNav: true, showOnHome: true, color: '#059669', subcategories: ['ব্যাংক ও বীমা', 'শেয়ারবাজার', 'বাজেট', 'মুদ্রাস্ফীতি'], postCount: 8 },
+  { id: 'cat-5', name: 'সারাদেশ', slug: 'countrywide', order: 5, showInNav: true, showOnHome: true, color: '#7c3aed', subcategories: ['চট্টগ্রাম', 'রাজশাহী', 'খুলনা', 'সিলেট', 'বরিশাল', 'রংপুর', 'ময়মনসিংহ'], postCount: 9 },
+  { id: 'cat-6', name: 'খেলাধুলা', slug: 'sports', order: 6, showInNav: true, showOnHome: true, color: '#16a34a', subcategories: ['ক্রিকেট', 'ফুটবল', 'টেনিস', 'বিশ্ব ক্রীড়া'], postCount: 11 },
+  { id: 'cat-7', name: 'বিনোদন', slug: 'entertainment', order: 7, showInNav: true, showOnHome: true, color: '#db2777', subcategories: ['চলচ্চিত্র', 'নাটক', 'সঙ্গীত', 'ওটিটি', 'হলিউড-বলিউড'], postCount: 7 },
+  { id: 'cat-8', name: 'প্রযুক্তি', slug: 'technology', order: 8, showInNav: true, showOnHome: true, color: '#0284c7', subcategories: ['কৃত্রিম বুদ্ধিমত্তা', 'স্মার্টফোন', 'সাইবার নিরাপত্তা', 'স্টার্টআপ'], postCount: 6 },
+  { id: 'cat-9', name: 'মতামত', slug: 'opinion', order: 9, showInNav: true, showOnHome: true, color: '#d97706', subcategories: ['সম্পাদকীয়', 'কলাম', 'বিশ্লেষণ', 'চিঠিপত্র'], postCount: 5 },
+  { id: 'cat-10', name: 'শিক্ষা', slug: 'education', order: 10, showInNav: true, showOnHome: true, color: '#0891b2', subcategories: ['বিশ্ববিদ্যালয়', 'প্রাথমিক ও মাধ্যমিক', 'পরীক্ষা', 'বৃত্তি'], postCount: 4 },
+  { id: 'cat-11', name: 'স্বাস্থ্য', slug: 'health', order: 11, showInNav: true, showOnHome: true, color: '#0d9488', subcategories: ['চিকিৎসা পরামর্শ', 'পুষ্টি', 'মানসিক স্বাস্থ্য'], postCount: 5 },
+  { id: 'cat-12', name: 'লাইফস্টাইল', slug: 'lifestyle', order: 12, showInNav: true, showOnHome: true, color: '#ca8a04', subcategories: ['ভ্রমণ', 'ফ্যাশন', 'রান্নাবান্না', 'সম্পর্ক'], postCount: 4 },
+  { id: 'cat-13', name: 'ভিডিও', slug: 'video', order: 13, showInNav: true, showOnHome: true, color: '#e11d48', subcategories: ['বিশেষ প্রতিবেদন', 'টকশো', 'সরাসরি'], postCount: 6 },
+  { id: 'cat-14', name: 'ছবি', slug: 'photos', order: 14, showInNav: true, showOnHome: true, color: '#4f46e5', subcategories: ['ফটো ফিচার', 'দিনবদল', 'প্রকৃতি'], postCount: 4 },
+];
+
+export const INITIAL_AUTHORS: Author[] = [
+  {
+    id: 'auth-1',
+    name: 'মাহবুবুর রহমান চিশতী',
+    slug: 'mahbubur-rahman',
+    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+    designation: 'প্রধান সম্পাদক',
+    bio: 'জাতীয় ও আন্তর্জাতিক সাংবাদিকতায় আড়াই দশকের অভিজ্ঞতা সম্পন্ন বিশ্লেষক ও কলামিস্ট।',
+    email: 'editor@satyabani.com',
+    socialLinks: { facebook: 'https://facebook.com', twitter: 'https://twitter.com' },
+    articleCount: 15,
+  },
+  {
+    id: 'auth-2',
+    name: 'ফারহানা ইসলাম তন্বী',
+    slug: 'farhana-islam',
+    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80',
+    designation: 'বিশেষ প্রতিনিধি ও জাতীয় ডেস্ক প্রধান',
+    bio: 'সংসদ, সংবিধান ও শাসনব্যবস্থা বিষয়ক অনুসন্ধানী সাংবাদিক।',
+    email: 'farhana@satyabani.com',
+    socialLinks: { twitter: 'https://twitter.com' },
+    articleCount: 12,
+  },
+  {
+    id: 'auth-3',
+    name: 'আরিফুল হক চৌধুরী',
+    slug: 'ariful-haque',
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
+    designation: 'অর্থনীতি ও বাণিজ্য সম্পাদক',
+    bio: 'ম্যাক্রো-ইকোনমিক্স, ব্যাংকিং রিফর্ম ও পুঁজিবাজার বিষয়ক বিশ্লেষক।',
+    email: 'ariful@satyabani.com',
+    articleCount: 9,
+  },
+  {
+    id: 'auth-4',
+    name: 'তানভীর আহমেদ রনি',
+    slug: 'tanvir-ahmed',
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80',
+    designation: 'প্রধান ক্রীড়া প্রতিবেদক',
+    bio: 'আইসিসি ও ফিফা স্বীকৃত ক্রীড়া সাংবাদিক। মাঠের ভেতরের এবং বাইরের সমীকরণ তুলে ধরেন।',
+    email: 'sports@satyabani.com',
+    articleCount: 14,
+  },
+  {
+    id: 'auth-5',
+    name: 'নাদিয়া সুলতানা',
+    slug: 'nadia-sultana',
+    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
+    designation: 'প্রযুক্তি ও উদ্ভাবন বিষয়ক প্রতিনিধি',
+    bio: 'কৃত্রিম বুদ্ধিমত্তা, সাইবার নীতি ও স্টার্টআপ ইকোসিস্টেম কাভার করেন।',
+    email: 'nadia.tech@satyabani.com',
+    articleCount: 8,
+  },
+];
+
+export const INITIAL_USERS: (User & { password?: string })[] = [
+  {
+    id: 'usr-nasim-admin',
+    name: 'নাসিম (Super Admin)',
+    email: process.env.ADMIN_EMAIL || 'nasim708070@gmail.com',
+    password: process.env.ADMIN_PASSWORD || '89717926',
+    role: 'super_admin',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    designation: 'প্রধান সম্পাদক ও সিস্টেম প্রশাসক',
+    createdAt: '2026-01-01T00:00:00.000Z',
+  },
+  {
+    id: 'usr-nasim-editor',
+    name: 'নাসিম (Editor)',
+    email: process.env.EDITOR_EMAIL || 'nasim405040@gmail.com',
+    password: process.env.EDITOR_PASSWORD || '89717926@@',
+    role: 'editor',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    designation: 'বার্তা সম্পাদক (News Editor)',
+    createdAt: '2026-01-05T00:00:00.000Z',
+  },
+  {
+    id: 'usr-1',
+    name: 'সত্যবাণী প্রধান অ্যাডমিন',
+    email: 'admin@satyabani.com',
+    password: 'admin123',
+    role: 'super_admin',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    designation: 'সিস্টেম অ্যাডমিনিস্ট্রেটর',
+    createdAt: '2026-01-01T00:00:00.000Z',
+  },
+  {
+    id: 'usr-2',
+    name: 'ফারহানা ইসলাম',
+    email: 'editor@satyabani.com',
+    password: 'editor123',
+    role: 'editor',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    designation: 'বার্তা সম্পাদক',
+    createdAt: '2026-01-05T00:00:00.000Z',
+  },
+  {
+    id: 'usr-3',
+    name: 'তানভীর আহমেদ',
+    email: 'reporter@satyabani.com',
+    password: 'reporter123',
+    role: 'reporter',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    designation: 'সিনিয়র রিপোর্টার',
+    createdAt: '2026-01-10T00:00:00.000Z',
+  },
+];
+
+export const INITIAL_BREAKING_NEWS: BreakingNews[] = [
+  {
+    id: 'brk-1',
+    title: 'জাতীয় অর্থনীতিতে গতি ফেরাতে বিশেষ টাস্কফোর্সের সমন্বিত নীতিমালার খসড়া অনুমোদন',
+    link: '/article/economy-taskforce-policy-approved',
+    priority: 1,
+    isActive: true,
+    category: 'অর্থনীতি',
+    createdAt: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
+  },
+  {
+    id: 'brk-2',
+    title: 'টি-টোয়েন্টি সিরিজে ইতিহাস গড়ে নাটকীয় জয় তুলে নিল বাংলাদেশ জাতীয় দল',
+    link: '/article/bangladesh-cricket-historic-victory-t20',
+    priority: 2,
+    isActive: true,
+    category: 'খেলাধুলা',
+    createdAt: new Date(Date.now() - 1000 * 60 * 55).toISOString(),
+  },
+  {
+    id: 'brk-3',
+    title: 'রাজধানীর বায়ুমান নিয়ন্ত্রণে শিল্পাঞ্চলে পরিবেশ অধিদপ্তরের কঠোর অভিযান শুরু',
+    link: '/article/dhaka-air-quality-drive-environment',
+    priority: 3,
+    isActive: true,
+    category: 'জাতীয়',
+    createdAt: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+  },
+];
+
+export const INITIAL_ARTICLES: Article[] = [
+  {
+    id: 'art-1',
+    title: 'মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন মুদ্রানীতির সুফল মিলতে শুরু করেছে: গভর্নর',
+    slug: 'inflation-control-new-monetary-policy-results',
+    subtitle: 'মূল্যস্ফীতি কমাতে খাদ্য সরবরাহ চেইন ডিজিটালাইজেশন ও সুদের হারের সমন্বয়ে বড় অগ্রগতি',
+    excerpt: 'মূল্যস্ফীতির চাপ হ্রাস এবং বৈদেশিক মুদ্রার রিজার্ভে ভারসাম্য বজায় রাখতে গ্রহণ করা সমন্বিত কৌশল কার্যকর প্রমাণিত হচ্ছে বলে জানিয়েছেন কেন্দ্রীয় ব্যাংকের গভর্নর।',
+    content: `
+<p class="lead text-lg font-medium text-slate-800 dark:text-slate-200">মূল্যস্ফীতির চাপ ক্রমান্বয়ে সহনশীল মাত্রায় নামিয়ে আনতে নেওয়া বহুমুখী মুদ্রানীতি ও সরবরাহ চেইন ব্যবস্থাপনার ইতিবাচক প্রভাব দৃশ্যমান হতে শুরু করেছে। একই সঙ্গে দেশের বৈদেশিক মুদ্রার রিজার্ভেও স্থিতিশীলতা ফিরেছে বলে জানিয়েছেন কেন্দ্রীয় ব্যাংকের গভর্নর।</p>
+
+<p>মঙ্গলবার দুপুরে রাজধানীর প্রধান কার্যালয়ে আয়োজিত এক উচ্চপর্যায়ের নীতিনির্ধারণী ব্রিফিংয়ে গভর্নর এই তথ্য তুলে ধরেন। তিনি বলেন, "আন্তর্জাতিক বাজারে পণ্যের মূল্যের গতিপ্রকৃতি পর্যবেক্ষণ করে অভ্যন্তরীণ আমদানি ও মুদ্রানীতিতে যে বাস্তবসম্মত সংস্কার আনা হয়েছিল, তার সুফল এখন প্রান্তিক পর্যায়ে পৌঁছাতে শুরু করেছে।"</p>
+
+<blockquote class="my-6 border-l-4 border-rose-700 pl-4 italic text-slate-700 dark:text-slate-300 font-serif text-lg bg-rose-50/40 dark:bg-slate-800/40 py-3 rounded-r-lg">
+"আগামী প্রান্তিকের মধ্যেই সাধারণ মানুষের দৈনন্দিন খাদ্যপণ্য ও নিত্যপ্রয়োজনীয় পণ্যের বাজারে মূল্যস্ফীতির হার কাঙ্ক্ষিত সিঙ্গেল ডিজিটে নামিয়ে আনার লক্ষ্যমাত্রা অর্জিত হবে।" — গভর্নর
+</blockquote>
+
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mt-6 mb-3">রিজার্ভ ও রেমিট্যান্সের নতুন চিত্র</h3>
+<p>ব্যাংকিং চ্যানেলে প্রণোদনা বৃদ্ধির পাশাপাশি অনানুষ্ঠানিক লেনদেন বন্ধে কঠোর নজরদারির ফলে প্রবাসী আয়ে গত দুই মাসে উল্লেখযোগ্য প্রবৃদ্ধি লক্ষ্য করা গেছে। চলতি অর্থবছরের প্রথম ভাগে বৈধ পথে রেমিট্যান্স প্রবাহ বিগত বছরের একই সময়ের তুলনায় প্রায় ১৮ শতাংশ বৃদ্ধি পেয়েছে।</p>
+
+<p>এর ফলে বৈদেশিক লেনদেনের চলতি হিসাবের ঘাটতি অনেকটাই সংকুচিত হয়েছে এবং জ্বালানি ও শিল্পের কাঁচামাল আমদানির ক্ষেত্রে ডলার সংকট অনেকটাই কাটিয়ে ওঠা সম্ভব হয়েছে বলে কেন্দ্রীয় ব্যাংকের পরিসংখ্যানে দেখা গেছে।</p>
+
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mt-6 mb-3">ব্যাংকিং খাতের কাঠামোগত সংস্কার</h3>
+<p>খেলাপি ঋণ আদায়ে গঠিত বিশেষ ট্রাইব্যুনালের মাধ্যমে বড় ঋণগ্রহীতাদের জবাবদিহিতা নিশ্চিত করার কার্যক্রম জোরদার করা হয়েছে। গভর্নর উল্লেখ করেন যে, সুশাসন নিশ্চিত করতে কোনো দুর্বল ব্যাংকের অনিয়ম আর বরদাশত করা হবে না।</p>
+    `,
+    categoryId: 'cat-4',
+    categoryName: 'অর্থনীতি',
+    categorySlug: 'economy',
+    subcategory: 'ব্যাংক ও বীমা',
+    authorId: 'auth-3',
+    authorName: 'আরিফুল হক চৌধুরী',
+    authorPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
+    reporter: 'বিশেষ প্রতিনিধি, ঢাকা',
+    featuredImage: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&auto=format&fit=crop&q=80',
+    imageCaption: 'বাংলাদেশ ব্যাংকের গভর্নর মতিঝিল কার্যালয়ে সাংবাদিকদের ব্রিফ করছেন। ছবি: সত্যবাণী',
+    tags: ['অর্থনীতি', 'বাংলাদেশ ব্যাংক', 'মুদ্রানীতি', 'রেমিট্যান্স', 'মুদ্রাস্ফীতি'],
+    status: 'published',
+    homepagePlacement: 'hero_main',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: true,
+    views: 14850,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    seoTitle: 'মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন মুদ্রানীতির সুফল মিলতে শুরু করেছে: গভর্নর | সত্যবাণী',
+    seoDescription: 'মূল্যস্ফীতির চাপ হ্রাস এবং বৈদেশিক মুদ্রার রিজার্ভে ভারসাম্য বজায় রাখতে গ্রহণ করা সমন্বিত কৌশল কার্যকর প্রমাণিত হচ্ছে।',
+    seoKeywords: ['অর্থনীতি', 'বাংলাদেশ ব্যাংক', 'মূল্যস্ফীতি', 'রিজার্ভ'],
+  },
+  {
+    id: 'art-2',
+    title: 'নির্বাচনী রোডম্যাপ ও রাজনৈতিক সংলাপে সর্বদলীয় সমঝোতার তাগিদ রাষ্ট্রবিজ্ঞানীদের',
+    slug: 'electoral-roadmap-political-dialogue-consensus',
+    subtitle: 'গণতান্ত্রিক প্রতিষ্ঠানের স্বাধীনতা নিশ্চিত করতে সাংবিধানিক সংস্কারের ওপর জোর বিশেষজ্ঞদের',
+    excerpt: 'দেশের ভবিষ্যৎ গণতান্ত্রিক অগ্রযাত্রাকে নিরবচ্ছিন্ন রাখতে সব রাজনৈতিক দলের মধ্যে অর্থপূর্ণ সংলাপ ও প্রাতিষ্ঠানিক জবাবদিহিতা নিশ্চিত করার আহ্বান জানিয়েছেন দেশের শীর্ষ রাষ্ট্রবিজ্ঞানীরা।',
+    content: `
+<p>এক সেমিনারে বক্তারা বলেন, জাতীয় ঐকমত্য ছাড়া কোনো সংস্কারই দীর্ঘস্থায়ী হতে পারে না। জনগণের ভোটাধিকারের পূর্ণ নিশ্চয়তা ও নিরপেক্ষ প্রশাসনিক পরিকাঠামো গড়ে তোলাই প্রধান চ্যালেঞ্জ।</p>
+<p>সেমিনারে সাবেক নির্বাচন কমিশনার, আইন বিশেষজ্ঞ ও রাজনৈতিক বিশ্লেষকরা অংশ নিয়ে নির্বাচন ব্যবস্থার আধুনিকায়ন নিয়ে বিশদ মতামত ব্যক্ত করেন।</p>
+    `,
+    categoryId: 'cat-2',
+    categoryName: 'রাজনীতি',
+    categorySlug: 'politics',
+    subcategory: 'নির্বাচন',
+    authorId: 'auth-2',
+    authorName: 'ফারহানা ইসলাম তন্বী',
+    authorPhoto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80',
+    reporter: 'রাজনৈতিক প্রতিবেদক',
+    featuredImage: 'https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'রাজধানীর একটি মিলনায়তনে রাজনৈতিক দল ও নাগরিক সমাজের প্রতিনিধিদের গোলটেবিল বৈঠক।',
+    tags: ['রাজনীতি', 'গণতন্ত্র', 'নির্বাচন', 'জাতীয় সংলাপ'],
+    status: 'published',
+    homepagePlacement: 'hero_secondary',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: false,
+    views: 9340,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: 'art-3',
+    title: 'টি-টোয়েন্টি বিশ্বকাপের প্রস্তুতি ম্যাচে টাইগারদের নিখুঁত অলরাউন্ড নৈপুণ্য',
+    slug: 'bangladesh-cricket-t20-world-cup-preparation-mastery',
+    subtitle: 'ব্যাটিং ও বোলিংয়ের দুর্দান্ত মেলবন্ধনে প্রতিপক্ষকে বড় ব্যবধানে হারাল বাংলাদেশ',
+    excerpt: 'টপ অর্ডারের চমৎকার ব্যাটিংয়ের পর স্পিন ও পেস আক্রমণের সমন্বিত আঘাতে সহজ জয় তুলে নিয়েছে বাংলাদেশ জাতীয় ক্রিকেট দল।',
+    content: `
+<p>মিরপুর শের-ই-বাংলা জাতীয় ক্রিকেট স্টেডিয়ামে অনুষ্ঠিত ম্যাচে প্রথমে ব্যাট করতে নেমে নির্ধারিত ২০ ওভারে ৪ উইকেটে ১৯২ রানের পাহাড় গড়ে টাইগাররা। জবাবে ব্যাট করতে নেমে মাত্র ১৩৪ রানেই গুটিয়ে যায় সফরকারী দল।</p>
+<p>ম্যাচসেরা খেলোয়াড় বলেন, দল হিসেবে প্রতিটি পজিশনে নিজেদের সেরাটা দেওয়ার মানসিকতাই এই সাফল্যের মূল চাবিকাঠি।</p>
+    `,
+    categoryId: 'cat-6',
+    categoryName: 'খেলাধুলা',
+    categorySlug: 'sports',
+    subcategory: 'ক্রিকেট',
+    authorId: 'auth-4',
+    authorName: 'তানভীর আহমেদ রনি',
+    authorPhoto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80',
+    reporter: 'ক্রীড়া প্রতিবেদক',
+    featuredImage: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'ম্যাচ শেষে উল্লাস করছেন বাংলাদেশ ক্রিকেট দলের খেলোয়াড়রা। ছবি: সত্যবাণী',
+    tags: ['ক্রিকেট', 'বাংলাদেশ ক্রিকেট', 'টি-টোয়েন্টি', 'মিরপুর'],
+    status: 'published',
+    homepagePlacement: 'hero_secondary',
+    isFeatured: true,
+    isBreaking: true,
+    isEditorPick: true,
+    views: 24200,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 130).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 40).toISOString(),
+  },
+  {
+    id: 'art-4',
+    title: 'কৃত্রিম বুদ্ধিমত্তা চালিত বাংলা ল্যাঙ্গুয়েজ মডেল তৈরিতে বড় সাফল্য দেশীয় গবেষকদের',
+    slug: 'ai-bangla-large-language-model-breakthrough',
+    subtitle: 'শিক্ষা, স্বাস্থ্য ও প্রশাসনিক দাপ্তরিক কাজে নির্ভুল অনুবাদ ও তথ্য প্রক্রিয়া করতে সক্ষম',
+    excerpt: 'বাংলা ভাষার ব্যাকরণগত সূক্ষ্মতা ও আঞ্চলিক বৈচিত্র্য ধারণ করে কাজ করতে সক্ষম একটি আধুনিক এআই ফাউন্ডেশন মডেল উন্মোচন করেছেন বাংলাদেশি গবেষকদের দল।',
+    content: `
+<p>প্রযুক্তি বিশ্বে বাংলা ভাষার প্রতিনিধিত্ব আরও সমৃদ্ধ করতে এই মডেল গুরুত্বপূর্ণ ভূমিকা রাখবে। গবেষকরা জানান, সাধারণ নাগরিক সেবা থেকে শুরু করে সাইবার নিরাপত্তা ও শিক্ষা ক্ষেত্রে এই মডেল যুগান্তকারী পরিবর্তন আনবে।</p>
+    `,
+    categoryId: 'cat-8',
+    categoryName: 'প্রযুক্তি',
+    categorySlug: 'technology',
+    subcategory: 'কৃত্রিম বুদ্ধিমত্তা',
+    authorId: 'auth-5',
+    authorName: 'নাদিয়া সুলতানা',
+    authorPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
+    reporter: 'আইটি ডেস্ক',
+    featuredImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'বাংলা এআই প্রযুক্তির ওপর গবেষণার ডেমো উপস্থাপন।',
+    tags: ['প্রযুক্তি', 'কৃত্রিম বুদ্ধিমত্তা', 'বাংলা এআই', 'উদ্ভাবন'],
+    status: 'published',
+    homepagePlacement: 'hero_secondary',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: true,
+    views: 11200,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 180).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+  },
+  {
+    id: 'art-5',
+    title: 'পদ্মা ও যমুনা অববাহিকায় আধুনিক হাই-টেক কৃষি বিপ্লব: বদলে যাচ্ছে গ্রামীণ অর্থনীতি',
+    slug: 'padma-jamuna-hightech-agriculture-rural-revolution',
+    subtitle: 'স্মার্ট ড্রিপ ইরিগেশন ও সোলার কোল্ড স্টোরেজ ব্যবহারে ফসলের উৎপাদনশীলতা দ্বিগুণ',
+    excerpt: 'নদী অববাহিকার চরাঞ্চলে সৌরশক্তি চালিত আধুনিক কৃষি প্রযুক্তি ব্যবহারের মাধ্যমে সারা বছর উচ্চমূল্যের শাকসবজি ও ফল উৎপাদন করে ভাগ্য ফেরাচ্ছেন হাজারো কৃষক।',
+    content: `
+<p>কৃষি সম্প্রসারণ অধিদপ্তরের মাঠ পর্যায়ের কর্মকর্তাদের নিবিড় তত্ত্বাবধানে চরাঞ্চলের পতিত জমি এখন সবুজ ফসলের সমারোহ। ড্রোন প্রযুক্তির সাহায্যে ফসলের রোগবালাই নির্ণয় এবং জৈব সারের যথাযথ ব্যবহারের ফলে খরচ কমেছে ৩০ শতাংশ।</p>
+    `,
+    categoryId: 'cat-5',
+    categoryName: 'সারাদেশ',
+    categorySlug: 'countrywide',
+    subcategory: 'রাজশাহী',
+    authorId: 'auth-1',
+    authorName: 'মাহবুবুর রহমান চিশতী',
+    authorPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+    reporter: 'উত্তরাঞ্চল ব্যুরো',
+    featuredImage: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'চরের বিস্তীর্ণ ফসলের মাঠে কাজ করছেন উদ্যমী কৃষকরা।',
+    tags: ['কৃষি', 'সারাদেশ', 'পল্লী উন্নয়ন', 'স্মার্ট ফার্মিং'],
+    status: 'published',
+    homepagePlacement: 'featured',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: false,
+    views: 7800,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 240).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 100).toISOString(),
+  },
+  {
+    id: 'art-6',
+    title: 'আন্তর্জাতিক জলবায়ু তহবিলের অর্থছাড়ে উন্নয়নশীল দেশগুলোর স্বচ্ছতা বাড়ানোর আহ্বান',
+    slug: 'climate-funds-developing-nations-transparency',
+    subtitle: 'উপকূলীয় জনগোষ্ঠীর জলবায়ু অভিযোজনে সরাসরি অর্থায়নের দাবিতে বৈশ্বিক ফোরামে জোরালো বার্তা',
+    excerpt: 'জলবায়ু পরিবর্তনের মারাত্মক ঝুঁকিতে থাকা দেশগুলোতে দ্রুত ও শর্তহীন তহবিল পৌঁছানোর তাগিদ দিয়েছেন আন্তর্জাতিক পরিবেশবিদরা।',
+    content: `
+<p>জাতিসংঘের বিশেষ অধিবেশনে উন্নয়নশীল দ্বীপ ও বদ্বীপ অঞ্চলের প্রতিনিধিরা বলেন, প্রতিশ্রুতি অনুযায়ী ক্ষতিপূরণ তহবিল ছাড় করতে উন্নত দেশগুলোর আমলাতান্ত্রিক জটিলতা নিরসন করা জরুরি।</p>
+    `,
+    categoryId: 'cat-3',
+    categoryName: 'আন্তর্জাতিক',
+    categorySlug: 'international',
+    subcategory: 'ইউরোপ',
+    authorId: 'auth-2',
+    authorName: 'ফারহানা ইসলাম তন্বী',
+    authorPhoto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80',
+    reporter: 'আন্তর্জাতিক ডেস্ক',
+    featuredImage: 'https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'জলবায়ু পরিবর্তন ও সমুদ্রপৃষ্ঠের উচ্চতা বৃদ্ধির ঝুঁকিতে থাকা উপকূলীয় এলাকা।',
+    tags: ['আন্তর্জাতিক', 'জলবায়ু পরিবর্তন', 'পরিবেশ', 'জাতিসংঘ'],
+    status: 'published',
+    homepagePlacement: 'standard',
+    isFeatured: false,
+    isBreaking: false,
+    isEditorPick: false,
+    views: 5400,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 300).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+  },
+  {
+    id: 'art-7',
+    title: 'আন্তর্জাতিক চলচ্চিত্র উৎসবে বাংলা সিনেমার জয়জয়কার: সেরা চিত্রনাট্যের পুরস্কার লাভ',
+    slug: 'bangla-cinema-wins-international-film-festival-award',
+    subtitle: 'মৌলিক গল্প ও বাস্তবধর্মী চিত্রায়নে বিশ্বমঞ্চে প্রশংসিত তরুণ নির্মাতার সৃষ্টি',
+    excerpt: 'বিশ্বের নামকরা চলচ্চিত্র উৎসবে বিশেষ সম্মাননা অর্জন করেছে বাংলাদেশের স্বাধীন ধারার পূর্ণদৈর্ঘ্য চলচ্চিত্র।',
+    content: `
+<p>উৎসবে উপস্থিত আন্তর্জাতিক চলচ্চিত্র সমালোচকরা চলচ্চিত্রটির নির্মাণশৈলী এবং সাউন্ড ডিজাইনের ভূয়সী প্রশংসা করেছেন। পরিচালক জানান, আগামী মাসেই দেশের প্রেক্ষাগৃহে মুক্তি পাবে ছবিটি।</p>
+    `,
+    categoryId: 'cat-7',
+    categoryName: 'বিনোদন',
+    categorySlug: 'entertainment',
+    subcategory: 'চলচ্চিত্র',
+    authorId: 'auth-5',
+    authorName: 'নাদিয়া সুলতানা',
+    authorPhoto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
+    reporter: 'সংস্কৃতি প্রতিবেদক',
+    featuredImage: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'রেড কার্পেটে ট্রফি হাতে বাংলাদেশি পরিচালক ও শিল্পী দল।',
+    tags: ['বিনোদন', 'চলচ্চিত্র', 'বাংলা সিনেমা', 'পুরস্কার'],
+    status: 'published',
+    homepagePlacement: 'standard',
+    isFeatured: false,
+    isBreaking: false,
+    isEditorPick: true,
+    views: 8900,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 360).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 180).toISOString(),
+  },
+  {
+    id: 'art-8',
+    title: 'সম্পাদকীয়: সুশাসনের ভিত্তি মজবুত করতে প্রাতিষ্ঠানিক সংস্কারের বিকল্প নেই',
+    slug: 'editorial-strengthening-governance-institutional-reforms',
+    subtitle: 'আইনের শাসন, সামাজিক ন্যায়বিচার ও দুর্নীতিমুক্ত প্রশাসন গড়ে তুলতে জাতীয় অঙ্গীকার জরুরি',
+    excerpt: 'একটি আত্মমর্যাদাশীল ও সমৃদ্ধ গণতান্ত্রিক রাষ্ট্র গঠনের জন্য বিচার বিভাগ, দুর্নীতি দমন কমিশন ও নির্বাচন ব্যবস্থার পূর্ণ স্বায়ত্তশাসন নিশ্চিত করা সময়ের দাবি।',
+    content: `
+<p>গণতান্ত্রিক রাষ্ট্রে ক্ষমতার ভারসাম্য রক্ষায় স্বাধীন প্রতিষ্ঠানগুলোর ভূমিকা অনস্বীকার্য। অতীত অভিজ্ঞতার আলোকে প্রতিটি নাগরিকের মৌলিক অধিকার সুরক্ষায় সমন্বিত রাষ্ট্র সংস্কার অপরিহার্য।</p>
+    `,
+    categoryId: 'cat-9',
+    categoryName: 'মতামত',
+    categorySlug: 'opinion',
+    subcategory: 'সম্পাদকীয়',
+    authorId: 'auth-1',
+    authorName: 'মাহবুবুর রহমান চিশতী',
+    authorPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+    reporter: 'সম্পাদকীয় বোর্ড',
+    featuredImage: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'ন্যায়বিচার ও সংবিধানের প্রতীক। ছবি: সত্যবাণী সংগৃহীত',
+    tags: ['মতামত', 'সম্পাদকীয়', 'সুশাসন', 'সংস্কার'],
+    status: 'published',
+    homepagePlacement: 'standard',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: true,
+    views: 6700,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 420).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 200).toISOString(),
+  },
+  {
+    id: 'art-9',
+    title: 'বিশেষ ভিডিও প্রতিবেদন: সুন্দরবনের বাঘ সংরক্ষণ প্রকল্পে কমিউনিটি গার্ডদের বীরত্বগাথা',
+    slug: 'video-sundarbans-tiger-conservation-heroism',
+    subtitle: 'সুন্দরবনের জীববৈচিত্র্য রক্ষায় বনজীবী ও স্বেচ্ছাসেবকদের দিনরাতের পাহারা',
+    excerpt: 'জীবনের ঝুঁকি নিয়ে সুন্দরবনের প্রাকৃতিক ভারসাম্য রক্ষায় কাজ করে যাওয়া কমিউনিটি বনপ্রহরীদের অনুপ্রেরণামূলক জীবনচিত্র।',
+    content: `
+<p>ম্যানগ্রোভ বনের গভীরে বাঘ ও হরিণ শিকার প্রতিরোধে স্থানীয় বাসিন্দাদের সমন্বয়ে গঠিত দল আধুনিক জিপিএস ট্র্যাকিং ও বোট পেট্রোলিংয়ের মাধ্যমে অতন্দ্র পাহারা দিচ্ছে। দেখুন সত্যবাণীর বিশেষ ভিডিও প্রতিবেদন।</p>
+    `,
+    categoryId: 'cat-13',
+    categoryName: 'ভিডিও',
+    categorySlug: 'video',
+    subcategory: 'বিশেষ প্রতিবেদন',
+    authorId: 'auth-2',
+    authorName: 'ফারহানা ইসলাম তন্বী',
+    authorPhoto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80',
+    reporter: 'ভিডিও টিম',
+    featuredImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=900&auto=format&fit=crop&q=80',
+    imageCaption: 'সুন্দরবনের গভীর ম্যানগ্রোভ অরণ্যে রয়েল বেঙ্গল টাইগার।',
+    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    videoDuration: '০৫:৪০',
+    tags: ['ভিডিও', 'সুন্দরবন', 'বাঘ', 'প্রকৃতি'],
+    status: 'published',
+    homepagePlacement: 'standard',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: false,
+    views: 18400,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 480).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 220).toISOString(),
+  },
+  {
+    id: 'art-10',
+    title: 'ফটো ফিচার: শরৎকালের কাশবন ও মেঘের খেলায় মেতেছে গ্রামবাংলা',
+    slug: 'photo-feature-autumn-kashful-bengal-nature',
+    subtitle: 'নীল আকাশে সাদা মেঘের ভেলা আর নদীর তীরে কাশফুলের শুভ্র সমারোহ',
+    excerpt: 'ঋতুরানি শরতের অপরূপ সৌন্দর্যে মুগ্ধ প্রকৃতিপ্রেমীরা। ক্যামেরা লেন্সে ধারণ করা গ্রামবাংলার নয়নাভিরাম মুহূর্তগুলো।',
+    content: `
+<p>নদীর চরে মাথা দোলাচ্ছে শুভ্র কাশফুল। আকাশে পেঁজা তুলোর মতো মেঘের ওড়াউড়ি। দেখুন সত্যবাণীর চিত্রগ্রাহকদের তোলা মনোমুগ্ধকর আলোকচিত্রমালা।</p>
+    `,
+    categoryId: 'cat-14',
+    categoryName: 'ছবি',
+    categorySlug: 'photos',
+    subcategory: 'ফটো ফিচার',
+    authorId: 'auth-4',
+    authorName: 'তানভীর আহমেদ রনি',
+    authorPhoto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80',
+    reporter: 'ফটোজার্নালিস্ট ডেস্ক',
+    featuredImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=900&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&auto=format&fit=crop&q=80',
+    ],
+    imageCaption: 'শরতের নদীর কূলে কাশফুলের মনোমুগ্ধকর রূপ। ছবি: সত্যবাণী',
+    tags: ['ছবি', 'শরৎ', 'কাশফুল', 'ফটোগ্রাফি'],
+    status: 'published',
+    homepagePlacement: 'standard',
+    isFeatured: true,
+    isBreaking: false,
+    isEditorPick: false,
+    views: 8300,
+    publishedAt: new Date(Date.now() - 1000 * 60 * 540).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 240).toISOString(),
+  },
+];
+
+export const INITIAL_ADS: Advertisement[] = [
+  {
+    id: 'ad-1',
+    name: 'হেডার টপ ব্যানার (Leaderboard 728x90)',
+    type: 'banner',
+    placement: 'header_top',
+    device: 'all',
+    isActive: true,
+    bannerSize: '728x90',
+    adCode: `<!-- Adsterra 728x90 Banner Placement -->
+<div style="width: 100%; max-width: 728px; height: 90px; margin: 0 auto; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #fff; font-family: sans-serif;">
+  <div>
+    <span style="font-size: 10px; text-transform: uppercase; background: #dc2626; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold;">বিজ্ঞাপন</span>
+    <h4 style="margin: 4px 0 0 0; font-size: 15px; font-weight: 600;">সত্যবাণী ডিজিটাল নেটওয়ার্ক</h4>
+    <p style="margin: 0; font-size: 12px; color: #94a3b8;">সারা দেশের লাখো পাঠকের কাছে আপনার ব্র্যান্ড পৌঁছে দিন</p>
+  </div>
+  <a href="mailto:ads@satyabani.com" style="background: #dc2626; color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 600;">বিজ্ঞাপন দিন</a>
+</div>`,
+  },
+  {
+    id: 'ad-2',
+    name: 'হোমপেজ মিডল বিলবোর্ড (970x250)',
+    type: 'banner',
+    placement: 'home_middle',
+    device: 'all',
+    isActive: true,
+    bannerSize: '970x250',
+    adCode: `<!-- Adsterra 970x250 Billboard -->
+<div style="width: 100%; max-width: 970px; height: 120px; margin: 0 auto; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12px;">
+  <span style="font-size: 10px; color: #64748b; margin-bottom: 4px; text-transform: uppercase;">স্পনসর্ড কনটেন্ট ও পার্টনার নেটওয়ার্ক</span>
+  <h3 style="margin: 0; font-size: 18px; color: #1e293b; font-weight: bold;">আপনার ব্যবসা প্রসারে সত্যবাণী অ্যাড স্পেস</h3>
+  <p style="margin: 4px 0 8px 0; font-size: 13px; color: #475569;">টার্গেটেড অডিয়েন্সের কাছে হাই-কনভার্টিং ডিসপ্লে অ্যাড ক্যাম্পেইন চালান</p>
+  <span style="font-size: 11px; color: #dc2626; font-weight: bold;">যোগাযোগ: 01700-000000 | ads@satyabani.com</span>
+</div>`,
+  },
+  {
+    id: 'ad-3',
+    name: 'সাইডবার মিডিয়াম রেক্ট্যাঙ্গেল (300x250)',
+    type: 'banner',
+    placement: 'sidebar',
+    device: 'all',
+    isActive: true,
+    bannerSize: '300x250',
+    adCode: `<!-- Adsterra 300x250 Sidebar -->
+<div style="width: 100%; max-width: 300px; height: 250px; margin: 0 auto; background: linear-gradient(180deg, #f1f5f9, #e2e8f0); border: 1px solid #cbd5e1; border-radius: 6px; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; box-sizing: border-box; text-align: center;">
+  <span style="font-size: 10px; color: #64748b; text-transform: uppercase;">বিজ্ঞাপন / ADVERTISEMENT</span>
+  <div>
+    <h4 style="margin: 0; font-size: 16px; color: #0f172a; font-weight: bold;">সত্যবাণী মোবাইল অ্যাপ</h4>
+    <p style="margin: 8px 0 0 0; font-size: 12px; color: #475569;">ব্রেকিং নিউজ সবার আগে পেতে গুগল প্লে স্টোর থেকে ডাউনলোড করুন</p>
+  </div>
+  <div style="background: #0f172a; color: #fff; padding: 8px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;">ফ্রি ইনস্টল করুন</div>
+</div>`,
+  },
+  {
+    id: 'ad-4',
+    name: 'আর্টিকেল ইন-রিড ব্যানার (Article Middle)',
+    type: 'banner',
+    placement: 'article_middle',
+    device: 'all',
+    isActive: true,
+    bannerSize: '728x90',
+    adCode: `<!-- Adsterra In-Article Native Ad -->
+<div style="width: 100%; margin: 24px 0; padding: 16px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+  <div>
+    <span style="font-size: 10px; color: #9f1239; font-weight: bold; text-transform: uppercase;">বিশেষ অফার</span>
+    <h4 style="margin: 2px 0 0 0; font-size: 15px; color: #881337; font-weight: 600;">সত্যবাণী প্রিমিয়াম ই-পেপার ও নিউজলেটার</h4>
+    <p style="margin: 0; font-size: 12px; color: #9f1239;">প্রতিদিনের গুরুত্বপূর্ণ বিশ্লেষণ সরাসরি আপনার ইনবক্সে পান</p>
+  </div>
+  <a href="#newsletter" style="background: #9f1239; color: #fff; text-decoration: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600;">সাবস্ক্রাইব</a>
+</div>`,
+  },
+  {
+    id: 'ad-5',
+    name: 'Adsterra Social Bar Code (Example)',
+    type: 'social_bar',
+    placement: 'social_bar',
+    device: 'all',
+    isActive: false,
+    adCode: `<script type='text/javascript' src='//pl12345678.highperformancegate.com/example/socialbar.js'></script>`,
+  },
+  {
+    id: 'ad-6',
+    name: 'Adsterra Popunder Script (Example)',
+    type: 'popunder',
+    placement: 'popunder',
+    device: 'all',
+    isActive: false,
+    adCode: `<script type='text/javascript' src='//pl12345679.highperformancegate.com/example/popunder.js'></script>`,
+  },
+];
+
+export const INITIAL_COMMENTS: Comment[] = [
+  {
+    id: 'com-1',
+    articleId: 'art-1',
+    articleTitle: 'মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন মুদ্রানীতির সুফল মিলতে শুরু করেছে: গভর্নর',
+    userName: 'আবুল কালাম আজাদ',
+    userEmail: 'kalam@gmail.com',
+    content: 'খাদ্যপণ্যের দাম সাধারণ মানুষের ক্রয়ক্ষমতার মধ্যে রাখতে বাজার মনিটরিং আরও জোরদার করতে হবে। নীতিমালার বাস্তব প্রতিফলন আমরা দেখতে চাই।',
+    status: 'approved',
+    likes: 18,
+    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: 'com-2',
+    articleId: 'art-1',
+    articleTitle: 'মুদ্রাস্ফীতি নিয়ন্ত্রণে নতুন মুদ্রানীতির সুফল মিলতে শুরু করেছে: গভর্নর',
+    userName: 'সাইফুল ইসলাম রনি',
+    userEmail: 'ronys@yahoo.com',
+    content: 'ব্যাংকিং খাতে সুশাসন প্রতিষ্ঠার উদ্যোগ সময়োপযোগী। আশা করি ঋণখেলাপিদের বিরুদ্ধে দৃশ্যমান ব্যবস্থা অব্যাহত থাকবে।',
+    status: 'approved',
+    likes: 12,
+    createdAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+  },
+  {
+    id: 'com-3',
+    articleId: 'art-3',
+    articleTitle: 'টি-টোয়েন্টি বিশ্বকাপের প্রস্তুতি ম্যাচে টাইগারদের নিখুঁত অলরাউন্ড নৈপুণ্য',
+    userName: 'কৌশিক আহমেদ',
+    userEmail: 'koushik@gmail.com',
+    content: 'টপ অর্ডারের স্ট্রাইক রেট সত্যিই প্রশংসনীয় ছিল। এই ধারাবাহিকতা মূল আসরে বজায় থাকলে বড় কিছু সম্ভব।',
+    status: 'approved',
+    likes: 25,
+    createdAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+  },
+];
+
+export const INITIAL_HOMEPAGE_CONFIG: HomepageSectionConfig[] = [
+  { id: 'sec-1', type: 'hero', title: 'প্রধান সংবাদ (Hero Grid)', order: 1, enabled: true, postCount: 5 },
+  { id: 'sec-2', type: 'latest', title: 'সর্বশেষ সংবাদ', order: 2, enabled: true, postCount: 8 },
+  { id: 'sec-3', type: 'category_grid', categoryId: 'cat-1', title: 'জাতীয়', order: 3, enabled: true, postCount: 5 },
+  { id: 'sec-4', type: 'category_grid', categoryId: 'cat-2', title: 'রাজনীতি', order: 4, enabled: true, postCount: 4 },
+  { id: 'sec-5', type: 'category_grid', categoryId: 'cat-4', title: 'অর্থনীতি ও বাণিজ্য', order: 5, enabled: true, postCount: 4 },
+  { id: 'sec-6', type: 'sports_layout', categoryId: 'cat-6', title: 'খেলাধুলা', order: 6, enabled: true, postCount: 4 },
+  { id: 'sec-7', type: 'entertainment_layout', categoryId: 'cat-7', title: 'বিনোদন ও সংস্কৃতি', order: 7, enabled: true, postCount: 4 },
+  { id: 'sec-8', type: 'tech_layout', categoryId: 'cat-8', title: 'প্রযুক্তি ও উদ্ভাবন', order: 8, enabled: true, postCount: 4 },
+  { id: 'sec-9', type: 'video_section', categoryId: 'cat-13', title: 'ভিডিও গ্যালারি', order: 9, enabled: true, postCount: 4 },
+  { id: 'sec-10', type: 'opinion_section', categoryId: 'cat-9', title: 'মতামত ও সম্পাদকীয়', order: 10, enabled: true, postCount: 3 },
+  { id: 'sec-11', type: 'photo_gallery', categoryId: 'cat-14', title: 'ছবি ও ফটো ফিচার', order: 11, enabled: true, postCount: 4 },
+];
+
+export const INITIAL_SITE_SETTINGS: SiteSettings = {
+  siteName: 'সত্যবাণী',
+  siteTagline: 'সত্যের সন্ধানে নির্ভীক — জাতীয় বাংলা ডিজিটাল সংবাদপত্র',
+  logoUrl: '',
+  faviconUrl: '',
+  contactPhone: '+৮৮০ ২-৯৮৭৬৫৪৩',
+  contactEmail: 'contact@satyabani.com',
+  address: 'প্রগতি সরণি, বারিধারা, ঢাকা-১২১২, বাংলাদেশ',
+  editorName: 'মাহবুবুর রহমান চিশতী',
+  publisherName: 'সত্যবাণী পাবলিকেশন্স লিমিটেড',
+  copyrightText: '© ২০২৬ সত্যবাণী। সর্বস্বত্ব সংরক্ষিত। অনুমতি ছাড়া কোনো সংবাদ বা ছবির পুনঃপ্রকাশ নিষিদ্ধ।',
+  footerDescription: 'সত্যবাণী দেশের অন্যতম শীর্ষস্থানীয় স্বাধীন ও নিরপেক্ষ ডিজিটাল সংবাদপত্র। সত্য, বস্তুনিষ্ঠতা ও দায়িত্বশীল সাংবাদিকতাই আমাদের মূল শক্তি।',
+  socialLinks: {
+    facebook: 'https://facebook.com/satyabanibd',
+    youtube: 'https://youtube.com/@satyabanibd',
+    twitter: 'https://twitter.com/satyabanibd',
+    instagram: 'https://instagram.com/satyabanibd',
+    telegram: 'https://t.me/satyabanibd',
+    whatsapp: 'https://whatsapp.com/channel/satyabani',
+  },
+  seoDefaults: {
+    metaTitle: 'সত্যবাণী — জাতীয় বাংলা ডিজিটাল সংবাদপত্র',
+    metaDescription: 'সত্যবাণী - সত্যের সন্ধানে নির্ভীক। সর্বশেষ জাতীয়, আন্তর্জাতিক, রাজনীতি, অর্থনীতি ও খেলার খবর।',
+    metaKeywords: 'সত্যবাণী, বাংলা খবর, সংবাদ, আজকের খবর, ঢাকা, বাংলাদেশ, খেলাধুলা, রাজনীতি, অর্থনীতি',
+    defaultOgImage: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=1200&auto=format&fit=crop&q=80',
+    googleAnalyticsId: 'G-XXXXXXXXXX',
+    googleSearchConsoleTag: '',
+  },
+  adsConfig: {
+    enableAdsterra: true,
+    adsterraPublisherId: '1234567',
+    globalPopunderActive: false,
+    globalSocialBarActive: false,
+  },
+  themeSettings: {
+    primaryColor: '#991b1b', // Red-800 burgundy
+    darkModeDefault: false,
+  },
+};
+
+export const INITIAL_MEDIA: MediaItem[] = [
+  {
+    id: 'med-1',
+    name: 'bangladesh-bank-governor.jpg',
+    url: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&auto=format&fit=crop&q=80',
+    size: 245000,
+    mimeType: 'image/jpeg',
+    dimensions: '1200x800',
+    altText: 'বাংলাদেশ ব্যাংক গভর্নর প্রেস ব্রিফিং',
+    caption: 'গভর্নর প্রেস ব্রিফিংয়ে বক্তব্য রাখছেন',
+    uploadedAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+  },
+  {
+    id: 'med-2',
+    name: 'cricket-tigers-celebration.jpg',
+    url: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&auto=format&fit=crop&q=80',
+    size: 312000,
+    mimeType: 'image/jpeg',
+    dimensions: '1200x800',
+    altText: 'বাংলাদেশ ক্রিকেট দলের ম্যাচ জয় উদযাপন',
+    caption: 'মিরপুরে টাইগারদের বাঁধভাঙা উল্লাস',
+    uploadedAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
+  },
+  {
+    id: 'med-3',
+    name: 'sundarbans-tiger.jpg',
+    url: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&auto=format&fit=crop&q=80',
+    size: 420000,
+    mimeType: 'image/jpeg',
+    dimensions: '1200x800',
+    altText: 'সুন্দরবনের রয়্যাল বেঙ্গল টাইগার',
+    caption: 'ম্যানগ্রোভ অরণ্যে রয়েল বেঙ্গল টাইগার',
+    uploadedAt: new Date(Date.now() - 1000 * 60 * 60 * 36).toISOString(),
+  },
+];

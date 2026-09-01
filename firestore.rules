@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public read access to news articles, ads, categories, breaking news, and settings
+    // Everyone visiting the website (readers) can read all published news & ads.
+    match /articles/{articleId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /ads/{adId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /breaking_news/{newsId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Default catch-all for any other collections
+    match /{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

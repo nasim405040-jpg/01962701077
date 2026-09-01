@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "Article": {
+      "title": "Article",
+      "description": "Published and draft news articles for the platform",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "featuredImage": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "categorySlug": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "status": { "type": "string", "enum": ["published", "draft", "archived"] },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "views": { "type": "number" },
+        "isBreaking": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" }
+      },
+      "required": ["title", "slug", "content", "status"]
+    },
+    "Advertisement": {
+      "title": "Advertisement",
+      "description": "Advertisements displayed across the newspaper",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "placement": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "targetUrl": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["title", "placement", "imageUrl", "isActive"]
+    },
+    "BreakingNews": {
+      "title": "BreakingNews",
+      "description": "Ticker breaking news updates",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "priority": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "isActive"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "News categories",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "slug"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global newspaper configuration and metadata",
+      "type": "object",
+      "properties": {
+        "siteName": { "type": "string" },
+        "siteTagline": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/articles/{articleId}": {
+      "schema": "Article",
+      "description": "Public news articles readable by everyone, modifiable by editors and admins"
+    },
+    "/ads/{adId}": {
+      "schema": "Advertisement",
+      "description": "Advertisements readable by everyone, modifiable by admins"
+    },
+    "/breaking_news/{newsId}": {
+      "schema": "BreakingNews",
+      "description": "Breaking news ticker items readable by everyone"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "News categories readable by everyone"
+    },
+    "/settings/{settingId}": {
+      "schema": "SiteSettings",
+      "description": "Global settings readable by everyone"
+    }
+  }
+}
